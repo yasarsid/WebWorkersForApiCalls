@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallel API Client Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .response-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .response-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f1f1f1;
+        }
+        .controls {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        input {
+            padding: 8px;
+            width: 60px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .timing {
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+        .timing-container {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-left: 4px solid #1e90ff;
+        }
+        .timing-item {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+        .timing-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 200px;
+        }
+        .highlight {
+            color: #d9534f;
+            font-weight: bold;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        .worker-button {
+            background-color: #2196F3;
+        }
+        .worker-button:hover {
+            background-color: #0b7dda;
+        }
+        .compare-button {
+            background-color: #9c27b0;
+        }
+        .compare-button:hover {
+            background-color: #7b1fa2;
+        }
+    </style>
+    <!-- Import the UI module which handles everything -->
+    <script type="module" src="ui.js"></script>
+</head>
+<body>
+    <h1>Parallel API Requests Demo</h1>
+    
+    <div class="controls">
+        <label for="requestCount">Number of requests:</label>
+        <input type="number" id="requestCount" min="1" max="50" value="10">
+        <label for="workerCount">Number of workers:</label>
+        <input type="number" id="workerCount" min="1" max="16" value="5">
+        <div class="button-group">
+            <button id="fetchParallelButton">Fetch in Main Thread</button>
+            <button id="fetchWorkerButton" class="worker-button">Fetch in Web Worker</button>
+            <button id="fetchBothButton" class="compare-button">Run Both Sequentially</button>
+        </div>
+    </div>
+    
+    <div class="timing-container" id="timing-stats" style="display: none;">
+        <h3>Performance Metrics:</h3>
+        <div class="timing-item">
+            <span class="timing-label">End-to-end time:</span>
+            <span id="end-to-end-time">--</span> ms
+        </div>
+    </div>
+    
+    <div class="timing-container" id="comparison-stats" style="display: none;">
+        <h3>Comparison Results:</h3>
+        <div class="timing-item">
+            <span class="timing-label">Main Thread Method:</span>
+            <span id="main-thread-time">--</span> ms
+        </div>
+        <div class="timing-item">
+            <span class="timing-label">Web Worker Method:</span>
+            <span id="worker-thread-time">--</span> ms
+        </div>
+        <div class="timing-item">
+            <span class="timing-label">Difference:</span>
+            <span id="time-difference">--</span> ms
+        </div>
+    </div>
+    
+    <div class="result" id="result">
+        <p>API responses will appear here...</p>
+    </div>
+</body>
+</html>
